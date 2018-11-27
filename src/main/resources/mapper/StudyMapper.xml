@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dcm.dao.StudyMapper">
+  <resultMap id="BaseResultMap" type="com.dcm.entity.Study">
+    <id column="pk" jdbcType="BIGINT" property="pk" />
+    <result column="access_control_id" jdbcType="VARCHAR" property="accessControlId" />
+    <result column="access_time" jdbcType="TIMESTAMP" property="accessTime" />
+    <result column="accession_no" jdbcType="VARCHAR" property="accessionNo" />
+    <result column="completeness" jdbcType="INTEGER" property="completeness" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="expiration_date" jdbcType="VARCHAR" property="expirationDate" />
+    <result column="ext_retrieve_aet" jdbcType="VARCHAR" property="extRetrieveAet" />
+    <result column="failed_retrieves" jdbcType="INTEGER" property="failedRetrieves" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="rejection_state" jdbcType="INTEGER" property="rejectionState" />
+    <result column="study_size" jdbcType="BIGINT" property="studySize" />
+    <result column="storage_ids" jdbcType="VARCHAR" property="storageIds" />
+    <result column="study_custom1" jdbcType="VARCHAR" property="studyCustom1" />
+    <result column="study_custom2" jdbcType="VARCHAR" property="studyCustom2" />
+    <result column="study_custom3" jdbcType="VARCHAR" property="studyCustom3" />
+    <result column="study_date" jdbcType="VARCHAR" property="studyDate" />
+    <result column="study_desc" jdbcType="VARCHAR" property="studyDesc" />
+    <result column="study_id" jdbcType="VARCHAR" property="studyId" />
+    <result column="study_iuid" jdbcType="VARCHAR" property="studyIuid" />
+    <result column="study_time" jdbcType="VARCHAR" property="studyTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="dicomattrs_fk" jdbcType="BIGINT" property="dicomattrsFk" />
+    <result column="accno_issuer_fk" jdbcType="BIGINT" property="accnoIssuerFk" />
+    <result column="patient_fk" jdbcType="BIGINT" property="patientFk" />
+    <result column="ref_phys_name_fk" jdbcType="BIGINT" property="refPhysNameFk" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk, access_control_id, access_time, accession_no, completeness, created_time, expiration_date, 
+    ext_retrieve_aet, failed_retrieves, modified_time, rejection_state, study_size, storage_ids, 
+    study_custom1, study_custom2, study_custom3, study_date, study_desc, study_id, study_iuid, 
+    study_time, updated_time, version, dicomattrs_fk, accno_issuer_fk, patient_fk, ref_phys_name_fk
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from study
+    where pk = #{pk,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from study
+    where pk = #{pk,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dcm.entity.Study">
+    insert into study (pk, access_control_id, access_time, 
+      accession_no, completeness, created_time, 
+      expiration_date, ext_retrieve_aet, failed_retrieves, 
+      modified_time, rejection_state, study_size, 
+      storage_ids, study_custom1, study_custom2, 
+      study_custom3, study_date, study_desc, 
+      study_id, study_iuid, study_time, 
+      updated_time, version, dicomattrs_fk, 
+      accno_issuer_fk, patient_fk, ref_phys_name_fk
+      )
+    values (#{pk,jdbcType=BIGINT}, #{accessControlId,jdbcType=VARCHAR}, #{accessTime,jdbcType=TIMESTAMP}, 
+      #{accessionNo,jdbcType=VARCHAR}, #{completeness,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{expirationDate,jdbcType=VARCHAR}, #{extRetrieveAet,jdbcType=VARCHAR}, #{failedRetrieves,jdbcType=INTEGER}, 
+      #{modifiedTime,jdbcType=TIMESTAMP}, #{rejectionState,jdbcType=INTEGER}, #{studySize,jdbcType=BIGINT}, 
+      #{storageIds,jdbcType=VARCHAR}, #{studyCustom1,jdbcType=VARCHAR}, #{studyCustom2,jdbcType=VARCHAR}, 
+      #{studyCustom3,jdbcType=VARCHAR}, #{studyDate,jdbcType=VARCHAR}, #{studyDesc,jdbcType=VARCHAR}, 
+      #{studyId,jdbcType=VARCHAR}, #{studyIuid,jdbcType=VARCHAR}, #{studyTime,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}, #{dicomattrsFk,jdbcType=BIGINT}, 
+      #{accnoIssuerFk,jdbcType=BIGINT}, #{patientFk,jdbcType=BIGINT}, #{refPhysNameFk,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcm.entity.Study">
+    insert into study
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pk != null">
+        pk,
+      </if>
+      <if test="accessControlId != null">
+        access_control_id,
+      </if>
+      <if test="accessTime != null">
+        access_time,
+      </if>
+      <if test="accessionNo != null">
+        accession_no,
+      </if>
+      <if test="completeness != null">
+        completeness,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="expirationDate != null">
+        expiration_date,
+      </if>
+      <if test="extRetrieveAet != null">
+        ext_retrieve_aet,
+      </if>
+      <if test="failedRetrieves != null">
+        failed_retrieves,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+      <if test="rejectionState != null">
+        rejection_state,
+      </if>
+      <if test="studySize != null">
+        study_size,
+      </if>
+      <if test="storageIds != null">
+        storage_ids,
+      </if>
+      <if test="studyCustom1 != null">
+        study_custom1,
+      </if>
+      <if test="studyCustom2 != null">
+        study_custom2,
+      </if>
+      <if test="studyCustom3 != null">
+        study_custom3,
+      </if>
+      <if test="studyDate != null">
+        study_date,
+      </if>
+      <if test="studyDesc != null">
+        study_desc,
+      </if>
+      <if test="studyId != null">
+        study_id,
+      </if>
+      <if test="studyIuid != null">
+        study_iuid,
+      </if>
+      <if test="studyTime != null">
+        study_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="dicomattrsFk != null">
+        dicomattrs_fk,
+      </if>
+      <if test="accnoIssuerFk != null">
+        accno_issuer_fk,
+      </if>
+      <if test="patientFk != null">
+        patient_fk,
+      </if>
+      <if test="refPhysNameFk != null">
+        ref_phys_name_fk,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pk != null">
+        #{pk,jdbcType=BIGINT},
+      </if>
+      <if test="accessControlId != null">
+        #{accessControlId,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTime != null">
+        #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accessionNo != null">
+        #{accessionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="completeness != null">
+        #{completeness,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null">
+        #{expirationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="extRetrieveAet != null">
+        #{extRetrieveAet,jdbcType=VARCHAR},
+      </if>
+      <if test="failedRetrieves != null">
+        #{failedRetrieves,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rejectionState != null">
+        #{rejectionState,jdbcType=INTEGER},
+      </if>
+      <if test="studySize != null">
+        #{studySize,jdbcType=BIGINT},
+      </if>
+      <if test="storageIds != null">
+        #{storageIds,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom1 != null">
+        #{studyCustom1,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom2 != null">
+        #{studyCustom2,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom3 != null">
+        #{studyCustom3,jdbcType=VARCHAR},
+      </if>
+      <if test="studyDate != null">
+        #{studyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="studyDesc != null">
+        #{studyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="studyId != null">
+        #{studyId,jdbcType=VARCHAR},
+      </if>
+      <if test="studyIuid != null">
+        #{studyIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="studyTime != null">
+        #{studyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="dicomattrsFk != null">
+        #{dicomattrsFk,jdbcType=BIGINT},
+      </if>
+      <if test="accnoIssuerFk != null">
+        #{accnoIssuerFk,jdbcType=BIGINT},
+      </if>
+      <if test="patientFk != null">
+        #{patientFk,jdbcType=BIGINT},
+      </if>
+      <if test="refPhysNameFk != null">
+        #{refPhysNameFk,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcm.entity.Study">
+    update study
+    <set>
+      <if test="accessControlId != null">
+        access_control_id = #{accessControlId,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTime != null">
+        access_time = #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accessionNo != null">
+        accession_no = #{accessionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="completeness != null">
+        completeness = #{completeness,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null">
+        expiration_date = #{expirationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="extRetrieveAet != null">
+        ext_retrieve_aet = #{extRetrieveAet,jdbcType=VARCHAR},
+      </if>
+      <if test="failedRetrieves != null">
+        failed_retrieves = #{failedRetrieves,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rejectionState != null">
+        rejection_state = #{rejectionState,jdbcType=INTEGER},
+      </if>
+      <if test="studySize != null">
+        study_size = #{studySize,jdbcType=BIGINT},
+      </if>
+      <if test="storageIds != null">
+        storage_ids = #{storageIds,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom1 != null">
+        study_custom1 = #{studyCustom1,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom2 != null">
+        study_custom2 = #{studyCustom2,jdbcType=VARCHAR},
+      </if>
+      <if test="studyCustom3 != null">
+        study_custom3 = #{studyCustom3,jdbcType=VARCHAR},
+      </if>
+      <if test="studyDate != null">
+        study_date = #{studyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="studyDesc != null">
+        study_desc = #{studyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="studyId != null">
+        study_id = #{studyId,jdbcType=VARCHAR},
+      </if>
+      <if test="studyIuid != null">
+        study_iuid = #{studyIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="studyTime != null">
+        study_time = #{studyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="dicomattrsFk != null">
+        dicomattrs_fk = #{dicomattrsFk,jdbcType=BIGINT},
+      </if>
+      <if test="accnoIssuerFk != null">
+        accno_issuer_fk = #{accnoIssuerFk,jdbcType=BIGINT},
+      </if>
+      <if test="patientFk != null">
+        patient_fk = #{patientFk,jdbcType=BIGINT},
+      </if>
+      <if test="refPhysNameFk != null">
+        ref_phys_name_fk = #{refPhysNameFk,jdbcType=BIGINT},
+      </if>
+    </set>
+    where pk = #{pk,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcm.entity.Study">
+    update study
+    set access_control_id = #{accessControlId,jdbcType=VARCHAR},
+      access_time = #{accessTime,jdbcType=TIMESTAMP},
+      accession_no = #{accessionNo,jdbcType=VARCHAR},
+      completeness = #{completeness,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      expiration_date = #{expirationDate,jdbcType=VARCHAR},
+      ext_retrieve_aet = #{extRetrieveAet,jdbcType=VARCHAR},
+      failed_retrieves = #{failedRetrieves,jdbcType=INTEGER},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      rejection_state = #{rejectionState,jdbcType=INTEGER},
+      study_size = #{studySize,jdbcType=BIGINT},
+      storage_ids = #{storageIds,jdbcType=VARCHAR},
+      study_custom1 = #{studyCustom1,jdbcType=VARCHAR},
+      study_custom2 = #{studyCustom2,jdbcType=VARCHAR},
+      study_custom3 = #{studyCustom3,jdbcType=VARCHAR},
+      study_date = #{studyDate,jdbcType=VARCHAR},
+      study_desc = #{studyDesc,jdbcType=VARCHAR},
+      study_id = #{studyId,jdbcType=VARCHAR},
+      study_iuid = #{studyIuid,jdbcType=VARCHAR},
+      study_time = #{studyTime,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=BIGINT},
+      dicomattrs_fk = #{dicomattrsFk,jdbcType=BIGINT},
+      accno_issuer_fk = #{accnoIssuerFk,jdbcType=BIGINT},
+      patient_fk = #{patientFk,jdbcType=BIGINT},
+      ref_phys_name_fk = #{refPhysNameFk,jdbcType=BIGINT}
+    where pk = #{pk,jdbcType=BIGINT}
+  </update>
+</mapper>

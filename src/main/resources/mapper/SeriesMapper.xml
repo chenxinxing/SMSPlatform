@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dcm.dao.SeriesMapper">
+  <resultMap id="BaseResultMap" type="com.dcm.entity.Series">
+    <id column="pk" jdbcType="BIGINT" property="pk" />
+    <result column="body_part" jdbcType="VARCHAR" property="bodyPart" />
+    <result column="completeness" jdbcType="INTEGER" property="completeness" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="expiration_date" jdbcType="VARCHAR" property="expirationDate" />
+    <result column="ext_retrieve_aet" jdbcType="VARCHAR" property="extRetrieveAet" />
+    <result column="failed_retrieves" jdbcType="INTEGER" property="failedRetrieves" />
+    <result column="inst_purge_state" jdbcType="INTEGER" property="instPurgeState" />
+    <result column="inst_purge_time" jdbcType="TIMESTAMP" property="instPurgeTime" />
+    <result column="institution" jdbcType="VARCHAR" property="institution" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="laterality" jdbcType="VARCHAR" property="laterality" />
+    <result column="metadata_update_time" jdbcType="TIMESTAMP" property="metadataUpdateTime" />
+    <result column="modality" jdbcType="VARCHAR" property="modality" />
+    <result column="pps_cuid" jdbcType="VARCHAR" property="ppsCuid" />
+    <result column="pps_iuid" jdbcType="VARCHAR" property="ppsIuid" />
+    <result column="pps_start_date" jdbcType="VARCHAR" property="ppsStartDate" />
+    <result column="pps_start_time" jdbcType="VARCHAR" property="ppsStartTime" />
+    <result column="rejection_state" jdbcType="INTEGER" property="rejectionState" />
+    <result column="series_custom1" jdbcType="VARCHAR" property="seriesCustom1" />
+    <result column="series_custom2" jdbcType="VARCHAR" property="seriesCustom2" />
+    <result column="series_custom3" jdbcType="VARCHAR" property="seriesCustom3" />
+    <result column="series_desc" jdbcType="VARCHAR" property="seriesDesc" />
+    <result column="series_iuid" jdbcType="VARCHAR" property="seriesIuid" />
+    <result column="series_no" jdbcType="INTEGER" property="seriesNo" />
+    <result column="series_size" jdbcType="BIGINT" property="seriesSize" />
+    <result column="sop_cuid" jdbcType="VARCHAR" property="sopCuid" />
+    <result column="src_aet" jdbcType="VARCHAR" property="srcAet" />
+    <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    <result column="tsuid" jdbcType="VARCHAR" property="tsuid" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="dicomattrs_fk" jdbcType="BIGINT" property="dicomattrsFk" />
+    <result column="inst_code_fk" jdbcType="BIGINT" property="instCodeFk" />
+    <result column="metadata_fk" jdbcType="BIGINT" property="metadataFk" />
+    <result column="perf_phys_name_fk" jdbcType="BIGINT" property="perfPhysNameFk" />
+    <result column="study_fk" jdbcType="BIGINT" property="studyFk" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk, body_part, completeness, created_time, expiration_date, ext_retrieve_aet, failed_retrieves, 
+    inst_purge_state, inst_purge_time, institution, department, laterality, metadata_update_time, 
+    modality, pps_cuid, pps_iuid, pps_start_date, pps_start_time, rejection_state, series_custom1, 
+    series_custom2, series_custom3, series_desc, series_iuid, series_no, series_size, 
+    sop_cuid, src_aet, station_name, tsuid, updated_time, version, dicomattrs_fk, inst_code_fk, 
+    metadata_fk, perf_phys_name_fk, study_fk
+  </sql>
+   <select id="select" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    series_iuid
+    from series
+    where study_fk = (select pk from study where study_iuid=#{studyInstanseUID})
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from series
+    where pk = #{pk,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from series
+    where pk = #{pk,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dcm.entity.Series">
+    insert into series (pk, body_part, completeness, 
+      created_time, expiration_date, ext_retrieve_aet, 
+      failed_retrieves, inst_purge_state, inst_purge_time, 
+      institution, department, laterality, 
+      metadata_update_time, modality, pps_cuid, 
+      pps_iuid, pps_start_date, pps_start_time, 
+      rejection_state, series_custom1, series_custom2, 
+      series_custom3, series_desc, series_iuid, 
+      series_no, series_size, sop_cuid, 
+      src_aet, station_name, tsuid, 
+      updated_time, version, dicomattrs_fk, 
+      inst_code_fk, metadata_fk, perf_phys_name_fk, 
+      study_fk)
+    values (#{pk,jdbcType=BIGINT}, #{bodyPart,jdbcType=VARCHAR}, #{completeness,jdbcType=INTEGER}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{expirationDate,jdbcType=VARCHAR}, #{extRetrieveAet,jdbcType=VARCHAR}, 
+      #{failedRetrieves,jdbcType=INTEGER}, #{instPurgeState,jdbcType=INTEGER}, #{instPurgeTime,jdbcType=TIMESTAMP}, 
+      #{institution,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{laterality,jdbcType=VARCHAR}, 
+      #{metadataUpdateTime,jdbcType=TIMESTAMP}, #{modality,jdbcType=VARCHAR}, #{ppsCuid,jdbcType=VARCHAR}, 
+      #{ppsIuid,jdbcType=VARCHAR}, #{ppsStartDate,jdbcType=VARCHAR}, #{ppsStartTime,jdbcType=VARCHAR}, 
+      #{rejectionState,jdbcType=INTEGER}, #{seriesCustom1,jdbcType=VARCHAR}, #{seriesCustom2,jdbcType=VARCHAR}, 
+      #{seriesCustom3,jdbcType=VARCHAR}, #{seriesDesc,jdbcType=VARCHAR}, #{seriesIuid,jdbcType=VARCHAR}, 
+      #{seriesNo,jdbcType=INTEGER}, #{seriesSize,jdbcType=BIGINT}, #{sopCuid,jdbcType=VARCHAR}, 
+      #{srcAet,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}, #{tsuid,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}, #{dicomattrsFk,jdbcType=BIGINT}, 
+      #{instCodeFk,jdbcType=BIGINT}, #{metadataFk,jdbcType=BIGINT}, #{perfPhysNameFk,jdbcType=BIGINT}, 
+      #{studyFk,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcm.entity.Series">
+    insert into series
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pk != null">
+        pk,
+      </if>
+      <if test="bodyPart != null">
+        body_part,
+      </if>
+      <if test="completeness != null">
+        completeness,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="expirationDate != null">
+        expiration_date,
+      </if>
+      <if test="extRetrieveAet != null">
+        ext_retrieve_aet,
+      </if>
+      <if test="failedRetrieves != null">
+        failed_retrieves,
+      </if>
+      <if test="instPurgeState != null">
+        inst_purge_state,
+      </if>
+      <if test="instPurgeTime != null">
+        inst_purge_time,
+      </if>
+      <if test="institution != null">
+        institution,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="laterality != null">
+        laterality,
+      </if>
+      <if test="metadataUpdateTime != null">
+        metadata_update_time,
+      </if>
+      <if test="modality != null">
+        modality,
+      </if>
+      <if test="ppsCuid != null">
+        pps_cuid,
+      </if>
+      <if test="ppsIuid != null">
+        pps_iuid,
+      </if>
+      <if test="ppsStartDate != null">
+        pps_start_date,
+      </if>
+      <if test="ppsStartTime != null">
+        pps_start_time,
+      </if>
+      <if test="rejectionState != null">
+        rejection_state,
+      </if>
+      <if test="seriesCustom1 != null">
+        series_custom1,
+      </if>
+      <if test="seriesCustom2 != null">
+        series_custom2,
+      </if>
+      <if test="seriesCustom3 != null">
+        series_custom3,
+      </if>
+      <if test="seriesDesc != null">
+        series_desc,
+      </if>
+      <if test="seriesIuid != null">
+        series_iuid,
+      </if>
+      <if test="seriesNo != null">
+        series_no,
+      </if>
+      <if test="seriesSize != null">
+        series_size,
+      </if>
+      <if test="sopCuid != null">
+        sop_cuid,
+      </if>
+      <if test="srcAet != null">
+        src_aet,
+      </if>
+      <if test="stationName != null">
+        station_name,
+      </if>
+      <if test="tsuid != null">
+        tsuid,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="dicomattrsFk != null">
+        dicomattrs_fk,
+      </if>
+      <if test="instCodeFk != null">
+        inst_code_fk,
+      </if>
+      <if test="metadataFk != null">
+        metadata_fk,
+      </if>
+      <if test="perfPhysNameFk != null">
+        perf_phys_name_fk,
+      </if>
+      <if test="studyFk != null">
+        study_fk,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pk != null">
+        #{pk,jdbcType=BIGINT},
+      </if>
+      <if test="bodyPart != null">
+        #{bodyPart,jdbcType=VARCHAR},
+      </if>
+      <if test="completeness != null">
+        #{completeness,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null">
+        #{expirationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="extRetrieveAet != null">
+        #{extRetrieveAet,jdbcType=VARCHAR},
+      </if>
+      <if test="failedRetrieves != null">
+        #{failedRetrieves,jdbcType=INTEGER},
+      </if>
+      <if test="instPurgeState != null">
+        #{instPurgeState,jdbcType=INTEGER},
+      </if>
+      <if test="instPurgeTime != null">
+        #{instPurgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="institution != null">
+        #{institution,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="laterality != null">
+        #{laterality,jdbcType=VARCHAR},
+      </if>
+      <if test="metadataUpdateTime != null">
+        #{metadataUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modality != null">
+        #{modality,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsCuid != null">
+        #{ppsCuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsIuid != null">
+        #{ppsIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsStartDate != null">
+        #{ppsStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsStartTime != null">
+        #{ppsStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectionState != null">
+        #{rejectionState,jdbcType=INTEGER},
+      </if>
+      <if test="seriesCustom1 != null">
+        #{seriesCustom1,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCustom2 != null">
+        #{seriesCustom2,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCustom3 != null">
+        #{seriesCustom3,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesDesc != null">
+        #{seriesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesIuid != null">
+        #{seriesIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesNo != null">
+        #{seriesNo,jdbcType=INTEGER},
+      </if>
+      <if test="seriesSize != null">
+        #{seriesSize,jdbcType=BIGINT},
+      </if>
+      <if test="sopCuid != null">
+        #{sopCuid,jdbcType=VARCHAR},
+      </if>
+      <if test="srcAet != null">
+        #{srcAet,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="tsuid != null">
+        #{tsuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="dicomattrsFk != null">
+        #{dicomattrsFk,jdbcType=BIGINT},
+      </if>
+      <if test="instCodeFk != null">
+        #{instCodeFk,jdbcType=BIGINT},
+      </if>
+      <if test="metadataFk != null">
+        #{metadataFk,jdbcType=BIGINT},
+      </if>
+      <if test="perfPhysNameFk != null">
+        #{perfPhysNameFk,jdbcType=BIGINT},
+      </if>
+      <if test="studyFk != null">
+        #{studyFk,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcm.entity.Series">
+    update series
+    <set>
+      <if test="bodyPart != null">
+        body_part = #{bodyPart,jdbcType=VARCHAR},
+      </if>
+      <if test="completeness != null">
+        completeness = #{completeness,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationDate != null">
+        expiration_date = #{expirationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="extRetrieveAet != null">
+        ext_retrieve_aet = #{extRetrieveAet,jdbcType=VARCHAR},
+      </if>
+      <if test="failedRetrieves != null">
+        failed_retrieves = #{failedRetrieves,jdbcType=INTEGER},
+      </if>
+      <if test="instPurgeState != null">
+        inst_purge_state = #{instPurgeState,jdbcType=INTEGER},
+      </if>
+      <if test="instPurgeTime != null">
+        inst_purge_time = #{instPurgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="institution != null">
+        institution = #{institution,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="laterality != null">
+        laterality = #{laterality,jdbcType=VARCHAR},
+      </if>
+      <if test="metadataUpdateTime != null">
+        metadata_update_time = #{metadataUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modality != null">
+        modality = #{modality,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsCuid != null">
+        pps_cuid = #{ppsCuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsIuid != null">
+        pps_iuid = #{ppsIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsStartDate != null">
+        pps_start_date = #{ppsStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsStartTime != null">
+        pps_start_time = #{ppsStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectionState != null">
+        rejection_state = #{rejectionState,jdbcType=INTEGER},
+      </if>
+      <if test="seriesCustom1 != null">
+        series_custom1 = #{seriesCustom1,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCustom2 != null">
+        series_custom2 = #{seriesCustom2,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCustom3 != null">
+        series_custom3 = #{seriesCustom3,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesDesc != null">
+        series_desc = #{seriesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesIuid != null">
+        series_iuid = #{seriesIuid,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesNo != null">
+        series_no = #{seriesNo,jdbcType=INTEGER},
+      </if>
+      <if test="seriesSize != null">
+        series_size = #{seriesSize,jdbcType=BIGINT},
+      </if>
+      <if test="sopCuid != null">
+        sop_cuid = #{sopCuid,jdbcType=VARCHAR},
+      </if>
+      <if test="srcAet != null">
+        src_aet = #{srcAet,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null">
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="tsuid != null">
+        tsuid = #{tsuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="dicomattrsFk != null">
+        dicomattrs_fk = #{dicomattrsFk,jdbcType=BIGINT},
+      </if>
+      <if test="instCodeFk != null">
+        inst_code_fk = #{instCodeFk,jdbcType=BIGINT},
+      </if>
+      <if test="metadataFk != null">
+        metadata_fk = #{metadataFk,jdbcType=BIGINT},
+      </if>
+      <if test="perfPhysNameFk != null">
+        perf_phys_name_fk = #{perfPhysNameFk,jdbcType=BIGINT},
+      </if>
+      <if test="studyFk != null">
+        study_fk = #{studyFk,jdbcType=BIGINT},
+      </if>
+    </set>
+    where pk = #{pk,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcm.entity.Series">
+    update series
+    set body_part = #{bodyPart,jdbcType=VARCHAR},
+      completeness = #{completeness,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      expiration_date = #{expirationDate,jdbcType=VARCHAR},
+      ext_retrieve_aet = #{extRetrieveAet,jdbcType=VARCHAR},
+      failed_retrieves = #{failedRetrieves,jdbcType=INTEGER},
+      inst_purge_state = #{instPurgeState,jdbcType=INTEGER},
+      inst_purge_time = #{instPurgeTime,jdbcType=TIMESTAMP},
+      institution = #{institution,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      laterality = #{laterality,jdbcType=VARCHAR},
+      metadata_update_time = #{metadataUpdateTime,jdbcType=TIMESTAMP},
+      modality = #{modality,jdbcType=VARCHAR},
+      pps_cuid = #{ppsCuid,jdbcType=VARCHAR},
+      pps_iuid = #{ppsIuid,jdbcType=VARCHAR},
+      pps_start_date = #{ppsStartDate,jdbcType=VARCHAR},
+      pps_start_time = #{ppsStartTime,jdbcType=VARCHAR},
+      rejection_state = #{rejectionState,jdbcType=INTEGER},
+      series_custom1 = #{seriesCustom1,jdbcType=VARCHAR},
+      series_custom2 = #{seriesCustom2,jdbcType=VARCHAR},
+      series_custom3 = #{seriesCustom3,jdbcType=VARCHAR},
+      series_desc = #{seriesDesc,jdbcType=VARCHAR},
+      series_iuid = #{seriesIuid,jdbcType=VARCHAR},
+      series_no = #{seriesNo,jdbcType=INTEGER},
+      series_size = #{seriesSize,jdbcType=BIGINT},
+      sop_cuid = #{sopCuid,jdbcType=VARCHAR},
+      src_aet = #{srcAet,jdbcType=VARCHAR},
+      station_name = #{stationName,jdbcType=VARCHAR},
+      tsuid = #{tsuid,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=BIGINT},
+      dicomattrs_fk = #{dicomattrsFk,jdbcType=BIGINT},
+      inst_code_fk = #{instCodeFk,jdbcType=BIGINT},
+      metadata_fk = #{metadataFk,jdbcType=BIGINT},
+      perf_phys_name_fk = #{perfPhysNameFk,jdbcType=BIGINT},
+      study_fk = #{studyFk,jdbcType=BIGINT}
+    where pk = #{pk,jdbcType=BIGINT}
+  </update>
+</mapper>
