@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dev.dao.SendlistMapper">
+  <resultMap id="BaseResultMap" type="com.bright.dev.entity.Sendlist">
+    <id column="list_id" jdbcType="INTEGER" property="listId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="send_to" jdbcType="VARCHAR" property="sendTo" />
+    <result column="send_time" jdbcType="VARCHAR" property="sendTime" />
+    <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    list_id, user_id, send_to, send_time, send_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sendlist
+    where list_id = #{listId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sendlist
+    where list_id = #{listId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bright.dev.entity.Sendlist">
+    insert into sendlist (list_id, user_id, send_to, 
+      send_time, send_status)
+    values (#{listId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{sendTo,jdbcType=VARCHAR}, 
+      #{sendTime,jdbcType=VARCHAR}, #{sendStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bright.dev.entity.Sendlist">
+    insert into sendlist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="listId != null">
+        list_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sendTo != null">
+        send_to,
+      </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="listId != null">
+        #{listId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sendTo != null">
+        #{sendTo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bright.dev.entity.Sendlist">
+    update sendlist
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sendTo != null">
+        send_to = #{sendTo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        send_status = #{sendStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where list_id = #{listId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bright.dev.entity.Sendlist">
+    update sendlist
+    set user_id = #{userId,jdbcType=INTEGER},
+      send_to = #{sendTo,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=VARCHAR}
+    where list_id = #{listId,jdbcType=INTEGER}
+  </update>
+</mapper>
