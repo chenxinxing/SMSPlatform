@@ -1,2 +1,2 @@
 # SMSPlatform
-短信pingtai
+短信平台
