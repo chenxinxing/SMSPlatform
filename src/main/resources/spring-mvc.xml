@@ -22,7 +22,7 @@
     <mvc:resources mapping="/favicon.ico" location="/favicon.ico"/>
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="10"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-    <mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/index.html" location="classpath:/META-INF/resources/"/>
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<!-- 返回ResponseBody响应类型 -->
@@ -75,8 +75,8 @@
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<property name="prefix" value="/WEB-INF/html/" />
+		<property name="suffix" value=".html" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
 	</bean>
 	<!-- 上传文件配置 20*1024*1024即20M resolveLazily属性启用是为了推迟文件解析，以便捕获文件大小异常 -->
 	<bean id="multipartResolver"
