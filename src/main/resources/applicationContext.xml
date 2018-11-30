@@ -24,19 +24,27 @@
 	<!-- 启动时初始化Spring上下文环境工具类 -->
 	<!-- <bean id="springContextUtil" class="com.dcm.common.util.SpringContextUtil"></bean> -->
 	<!-- 引入属性文件 -->
-	<!--<context:property-placeholder location="classpath:jdbc.properties,classpath:config.properties"/>-->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
 
 	<!-- 启动任务注解 -->
 	<!-- <task:annotation-driven /> -->
 	<context:component-scan base-package="**.task" />
+	<!-- 配置事物的注解方式注入 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 	<!-- 配置数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="minPoolSize" value="1" />
+		&lt;!&ndash;<property name="minPoolSize" value="1" />
 		<property name="maxPoolSize" value="20" />
 		<property name="maxIdleTime" value="1800" />
 		<property name="acquireIncrement" value="2" />
@@ -45,7 +53,14 @@
 		<property name="idleConnectionTestPeriod" value="1800" />
 		<property name="acquireRetryAttempts" value="30" />
 		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
+		<property name="testConnectionOnCheckout" value="false" />&ndash;&gt;
+	</bean>-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method ="close">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name = "filters" value = "wall,stat" />
 	</bean>
 
 	<!-- myBatis文件 -->
@@ -54,20 +69,17 @@
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
+		<property name="transactionFactory">
+			<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
+		</property>
+
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.bright.dev.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
-	<!-- 配置事务管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
 
-	<!-- 配置事物的注解方式注入 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />

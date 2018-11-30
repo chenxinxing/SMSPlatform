@@ -6,7 +6,7 @@
 		<package name="com.dcm.entity"/> -->
 	<typeAliases>
 		<!-- <typeAlias type="com.xzx.entity.User" alias="User"/> -->
-		<package name="com.dcm.entity" /> <!-- 可以简化在xml的配置 -->
+		<package name="com.bright.dev.entity" /> <!-- 可以简化在xml的配置 -->
 	</typeAliases>
 <!-- 插件-->
 	<plugins>

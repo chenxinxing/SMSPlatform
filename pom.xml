@@ -40,13 +40,20 @@
 		<!-- web支持: 1、web mvc; 2、restful; 3、jackjson支持; 4、aop ........ -->
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-web</artifactId> 
 			</dependency> -->
-		<dependency>
+		<!--<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 			<type>jar</type>
-		</dependency>
-		<!-- 跨域过滤器相关 -->
+		</dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.9</version>
+        </dependency>
+
+        <!-- 跨域过滤器相关 -->
 		<dependency>
 			<groupId>com.thetransactioncompany</groupId>
 			<artifactId>java-property-utils</artifactId>
