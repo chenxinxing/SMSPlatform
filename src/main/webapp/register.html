@@ -95,57 +95,6 @@
             $("#tab-3").prop("checked", true);
         }
 
-        function login() {//登录
-            var username = $("#login-username").val(),
-                password = $("#login-password").val(),
-                validatecode = null,
-                flag = false;
-            //判断用户名密码是否为空
-            if (username == "") {
-                $.pt({
-                    target: $("#login-username"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "用户名不能为空"
-                });
-                flag = true;
-            }
-            if (password == "") {
-                $.pt({
-                    target: $("#login-password"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "密码不能为空"
-                });
-                flag = true;
-            }
-            //用户名只能是15位以下的字母或数字
-            var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
-            if (!regExp.test(username)) {
-                $.pt({
-                    target: $("#login-username"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "用户名必须为15位以下的字母或数字"
-                });
-                flag = true;
-            }
-
-            if (flag) {
-                return false;
-            } else {//登录
-                //调用后台登录验证的方法
-                alert('登录成功');
-                return false;
-            }
-        }
-
         //注册
         function register() {
             var username = $("#register-username").val(),
@@ -188,124 +137,204 @@
                 });
                 flag = true;
             }
-            if (code == "") {
-                $.pt({
-                    target: $("#register-code"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "取件码不能为空"
-                });
-                flag = true;
-            }
+
             if (!flag) {
-                // 获取表单的dom元素
-                var form = document.getElementById('test_form');
-                // 添加action
-                form.action = `http://localhost:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&address=${repassword}&authCode=${code}`
-                // 提交
-                form.submit();
-            }
-        }
 
-        //重置密码
-        function forget() {
-            var username = $("#forget-username").val(),
-                password = $("#forget-password").val(),
-                code = $("#forget-code").val(),
-                flag = false,
-                validatecode = null;
-            //判断用户名密码是否为空
-            if (username == "") {
-                $.pt({
-                    target: $("#forget-username"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "用户名不能为空"
-                });
-                flag = true;
-            }
-            if (password == "") {
-                $.pt({
-                    target: $("#forget-password"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "密码不能为空"
-                });
-                flag = true;
-            }
-            //用户名只能是15位以下的字母或数字
-            var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
-            if (!regExp.test(username)) {
-                $.pt({
-                    target: $("#forget-username"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "用户名必须为15位以下的字母或数字"
-                });
-                flag = true;
-            }
-            //检查用户名是否存在
-            //调后台方法
-
-            //检查注册码是否正确
-            if (code != '11111111') {
-                $.pt({
-                    target: $("#forget-code"),
-                    position: 'r',
-                    align: 't',
-                    width: 'auto',
-                    height: 'auto',
-                    content: "注册码不正确"
-                });
-                flag = true;
-            }
-
-            if (flag) {
-                return false;
-            } else {//重置密码
-                spop({
-                    template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
-                    position: 'top-center',
-                    style: 'success',
-                    autoclose: 3000,
-                    onOpen: function () {
-                        var second = 2;
-                        var showPop = setInterval(function () {
-                            if (second == 0) {
-                                clearInterval(showPop);
-                            }
-                            $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于' + second + '秒后返回登录');
-                            second--;
-                        }, 1000);
+                if (code == "") {
+                    $.pt({
+                        target: $("#register-code"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "取件码不能为空"
+                    });
+                    flag = true;
+                }
+                var obj = {
+                    sendTo: username,
+                    courierName: password,
+                    address: repassword,
+                    authCode: code
+                }
+                $.ajax({
+                    url: `http://101.132.141.83:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&address=${repassword}&authCode=${code}`,
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    //data: JSON.stringify(obj),
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if (result == 'success') {
+                            alert('发送成功');
+                            location.reload();
+                        } else {
+                            alert('发送失败');
+                            location.reload();
+                        }
                     },
-                    onClose: function () {
-                        goto_login();
+                    error: function (msg) {
+                        console.log(msg)
+                        // $(".notice").html('Error:'+msg);
                     }
-                });
-                return false;
+                }).fail()
+
+                // // 获取表单的dom元素
+                // var form = document.getElementById('test_form');
+                // // 添加action
+                // form.action = `http://localhost:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&address=${repassword}&authCode=${code}`
+                // // 提交
+                // form.submit();
+            }
+
+            function login() {//登录
+                var username = $("#login-username").val(),
+                    password = $("#login-password").val(),
+                    validatecode = null,
+                    flag = false;
+                //判断用户名密码是否为空
+                if (username == "") {
+                    $.pt({
+                        target: $("#login-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名不能为空"
+                    });
+                    flag = true;
+                }
+                if (password == "") {
+                    $.pt({
+                        target: $("#login-password"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "密码不能为空"
+                    });
+                    flag = true;
+                }
+                //用户名只能是15位以下的字母或数字
+                var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
+                if (!regExp.test(username)) {
+                    $.pt({
+                        target: $("#login-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名必须为15位以下的字母或数字"
+                    });
+                    flag = true;
+                }
+
+                if (flag) {
+                    return false;
+                } else {//登录
+                    //调用后台登录验证的方法
+                    alert('登录成功');
+                    return false;
+                }
+            }
+
+            //重置密码
+            function forget() {
+                var username = $("#forget-username").val(),
+                    password = $("#forget-password").val(),
+                    code = $("#forget-code").val(),
+                    flag = false,
+                    validatecode = null;
+                //判断用户名密码是否为空
+                if (username == "") {
+                    $.pt({
+                        target: $("#forget-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名不能为空"
+                    });
+                    flag = true;
+                }
+                if (password == "") {
+                    $.pt({
+                        target: $("#forget-password"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "密码不能为空"
+                    });
+                    flag = true;
+                }
+                //用户名只能是15位以下的字母或数字
+                var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
+                if (!regExp.test(username)) {
+                    $.pt({
+                        target: $("#forget-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名必须为15位以下的字母或数字"
+                    });
+                    flag = true;
+                }
+                //检查用户名是否存在
+                //调后台方法
+
+                //检查注册码是否正确
+                if (code != '11111111') {
+                    $.pt({
+                        target: $("#forget-code"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "注册码不正确"
+                    });
+                    flag = true;
+                }
+
+                if (flag) {
+                    return false;
+                } else {//重置密码
+                    spop({
+                        template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
+                        position: 'top-center',
+                        style: 'success',
+                        autoclose: 3000,
+                        onOpen: function () {
+                            var second = 2;
+                            var showPop = setInterval(function () {
+                                if (second == 0) {
+                                    clearInterval(showPop);
+                                }
+                                $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于' + second + '秒后返回登录');
+                                second--;
+                            }, 1000);
+                        },
+                        onClose: function () {
+                            goto_login();
+                        }
+                    });
+                    return false;
+                }
+            }
+
+            function showerror() {
+                var myerror = sessionStorage.getItem("error");
+                if (myerror === '') {
+                    console.log("123");
+                } else if (myerror == null) {
+                    console.log("456");
+                } else {
+                    alert(myerror);
+                }
+                myerror = null;
             }
         }
-
-        function showerror() {
-            var myerror =sessionStorage.getItem("error");
-            if (myerror === '' ) {
-                console.log("123");
-            } else if(myerror == null){
-                console.log("456");
-            }else {
-                alert(myerror);
-            }
-            myerror = null;
-        }
-
 
     </script>
     <style type="text/css">

@@ -30,28 +30,22 @@ public class SendController {
      */
     @RequestMapping(value = "/sendsms", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView send(@ModelAttribute("sendlist") SendList sendlist, HttpSession session) {
-        ModelAndView mode = new ModelAndView();
-
+    public String send(@ModelAttribute("sendlist") SendList sendlist, HttpSession session) {
         int error = -1;
-        int templateId = 238156;
+        int templateId = 240484;
         String smsSign = "素颜三部曲一麦吉丽";
         if (sendlist.getSendTo() != null && !"".equals(sendlist.getSendTo()) && sendlist.getCourierName() != null && !"".equals(sendlist.getCourierName())
                 && sendlist.getAddress() != null && !"".equals(sendlist.getAddress()) && sendlist.getAuthCode() != null && !"".equals(sendlist.getAuthCode())) {
             String[] param = new String[]{sendlist.getCourierName(), sendlist.getAddress(), sendlist.getAuthCode()};
-            //error = SmsDemo.sendUtil(sendlist.getSendTo(), templateId, smsSign, param);
-            error = 0;
+            error = SmsDemo.sendUtil(sendlist.getSendTo(), templateId, smsSign, param);
+            //error = 0;
         }
         if (error != 0 || error == -1) {
             session.setAttribute("error","发送失败，错误代码是："+error);
-            mode.addObject("error","发送失败，错误代码是："+error);
-            mode.setViewName("register");
-            return mode;
+            return "fail";
         } else{
             session.setAttribute("error","发送成功！！");
-            mode.addObject("error","发送成功！！");
-            mode.setViewName("register");
-            return mode;
+            return "success";
         }
     }
 }
