@@ -1,14 +1,15 @@
 package com.bright.dev.util;
 
 
+import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Random;
 
 /**
  * ID 随计数生成
  * @author dhz
  */
-
+@Component
 public class IdGenerator {
 
     private final static long beginTs = 1483200000000L;
@@ -21,9 +22,6 @@ public class IdGenerator {
     private long sequence = 0L;
     private int sequenceBits = 12;
 
-    public static List<String> HospitalID = new ArrayList<>();
-
-    public static Date TslUpdateTime=null;
 
     public IdGenerator() {
         int max=1024;

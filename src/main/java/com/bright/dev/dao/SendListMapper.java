@@ -1,7 +1,9 @@
 package com.bright.dev.dao;
 
 import com.bright.dev.entity.SendList;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SendListMapper {
     int deleteByPrimaryKey(Integer listId);
 

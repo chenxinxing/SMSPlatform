@@ -3,9 +3,9 @@ package com.bright.dev.entity;
 import java.io.Serializable;
 
 public class SendList implements Serializable {
-    private Integer listId;
+    private String listId;
 
-    private Integer userId;
+    private String userId;
 
     private String sendTo;
 
@@ -13,27 +13,23 @@ public class SendList implements Serializable {
 
     private String sendStatus;
 
-    private String courierName;
-
-    private String address;
-
-    private String authCode;
+    private String smsContent;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getListId() {
+    public String getListId() {
         return listId;
     }
 
-    public void setListId(Integer listId) {
+    public void setListId(String listId) {
         this.listId = listId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -61,28 +57,12 @@ public class SendList implements Serializable {
         this.sendStatus = sendStatus == null ? null : sendStatus.trim();
     }
 
-    public String getCourierName() {
-        return courierName;
+    public String getSmsContent() {
+        return smsContent;
     }
 
-    public void setCourierName(String courierName) {
-        this.courierName = courierName == null ? null : courierName.trim();
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
-
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode == null ? null : authCode.trim();
+    public void setSmsContent(String smsContent) {
+        this.smsContent = smsContent == null ? null : smsContent.trim();
     }
 
     @Override
@@ -102,9 +82,7 @@ public class SendList implements Serializable {
             && (this.getSendTo() == null ? other.getSendTo() == null : this.getSendTo().equals(other.getSendTo()))
             && (this.getSendTime() == null ? other.getSendTime() == null : this.getSendTime().equals(other.getSendTime()))
             && (this.getSendStatus() == null ? other.getSendStatus() == null : this.getSendStatus().equals(other.getSendStatus()))
-            && (this.getCourierName() == null ? other.getCourierName() == null : this.getCourierName().equals(other.getCourierName()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getAuthCode() == null ? other.getAuthCode() == null : this.getAuthCode().equals(other.getAuthCode()));
+            && (this.getSmsContent() == null ? other.getSmsContent() == null : this.getSmsContent().equals(other.getSmsContent()));
     }
 
     @Override
@@ -116,9 +94,7 @@ public class SendList implements Serializable {
         result = prime * result + ((getSendTo() == null) ? 0 : getSendTo().hashCode());
         result = prime * result + ((getSendTime() == null) ? 0 : getSendTime().hashCode());
         result = prime * result + ((getSendStatus() == null) ? 0 : getSendStatus().hashCode());
-        result = prime * result + ((getCourierName() == null) ? 0 : getCourierName().hashCode());
-        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
-        result = prime * result + ((getAuthCode() == null) ? 0 : getAuthCode().hashCode());
+        result = prime * result + ((getSmsContent() == null) ? 0 : getSmsContent().hashCode());
         return result;
     }
 
@@ -133,9 +109,7 @@ public class SendList implements Serializable {
         sb.append(", sendTo=").append(sendTo);
         sb.append(", sendTime=").append(sendTime);
         sb.append(", sendStatus=").append(sendStatus);
-        sb.append(", courierName=").append(courierName);
-        sb.append(", address=").append(address);
-        sb.append(", authCode=").append(authCode);
+        sb.append(", smsContent=").append(smsContent);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

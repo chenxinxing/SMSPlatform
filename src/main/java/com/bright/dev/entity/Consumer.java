@@ -3,7 +3,7 @@ package com.bright.dev.entity;
 import java.io.Serializable;
 
 public class Consumer implements Serializable {
-    private Integer userId;
+    private String userId;
 
     private String userName;
 
@@ -11,13 +11,15 @@ public class Consumer implements Serializable {
 
     private String userPassword;
 
+    private String userStatus;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -45,6 +47,14 @@ public class Consumer implements Serializable {
         this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus == null ? null : userStatus.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -60,7 +70,8 @@ public class Consumer implements Serializable {
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getSmsAmout() == null ? other.getSmsAmout() == null : this.getSmsAmout().equals(other.getSmsAmout()))
-            && (this.getUserPassword() == null ? other.getUserPassword() == null : this.getUserPassword().equals(other.getUserPassword()));
+            && (this.getUserPassword() == null ? other.getUserPassword() == null : this.getUserPassword().equals(other.getUserPassword()))
+            && (this.getUserStatus() == null ? other.getUserStatus() == null : this.getUserStatus().equals(other.getUserStatus()));
     }
 
     @Override
@@ -71,6 +82,7 @@ public class Consumer implements Serializable {
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getSmsAmout() == null) ? 0 : getSmsAmout().hashCode());
         result = prime * result + ((getUserPassword() == null) ? 0 : getUserPassword().hashCode());
+        result = prime * result + ((getUserStatus() == null) ? 0 : getUserStatus().hashCode());
         return result;
     }
 
@@ -84,6 +96,7 @@ public class Consumer implements Serializable {
         sb.append(", userName=").append(userName);
         sb.append(", smsAmout=").append(smsAmout);
         sb.append(", userPassword=").append(userPassword);
+        sb.append(", userStatus=").append(userStatus);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
