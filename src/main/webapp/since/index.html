@@ -17,7 +17,7 @@
 <script src="js/snow.js"></script>
 <script src="js/jquery.pure.tooltips.js"></script>
 <script src="js/spop.min.js"></script>
-<script>	
+<script>
 	(function() {
 		// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
 		if (!String.prototype.trim) {
@@ -51,8 +51,8 @@
 			}
 		}
 	})();
-	
-	$(function() {	
+
+	$(function() {
 		$('#login #login-password').focus(function() {
 			$('.login-owl').addClass('password');
 		}).blur(function() {
@@ -74,7 +74,7 @@
 			$('.forget-owl').removeClass('password');
 		});
 	});
-	
+
 	function goto_register(){
 		$("#register-username").val("");
 		$("#register-password").val("");
@@ -82,20 +82,20 @@
 		$("#register-code").val("");
 		$("#tab-2").prop("checked",true);
 	}
-	
+
 	function goto_login(){
 		$("#login-username").val("");
 		$("#login-password").val("");
 		$("#tab-1").prop("checked",true);
 	}
-	
+
 	function goto_forget(){
 		$("#forget-username").val("");
 		$("#forget-password").val("");
 		$("#forget-code").val("");
 		$("#tab-3").prop("checked",true);
 	}
-	
+
 	function login(){//登录
 		var username = $("#login-username").val(),
 			password = $("#login-password").val(),
@@ -137,7 +137,7 @@
         	});
 			flag = true;
 		}
-		
+
 		if(flag){
 			return false;
 		}else{//登录
@@ -174,7 +174,7 @@
             }).fail()
 		}
 	}
-	
+
 	//注册
 	function register(){
 		var username = $("#register-username").val(),
@@ -233,7 +233,7 @@
 		}
 		//检查用户名是否已经存在
 		//调后台代码检查用户名是否已经被注册
-		
+
 		//检查注册码是否正确
 		//调后台方法检查注册码，这里写死为11111111
 		if(code != '11111111'){
@@ -251,7 +251,7 @@
 		if(flag){
 			return false;
 		}else{//注册
-			spop({			
+			spop({
 				template: '<h4 class="spop-title">注册成功</h4>即将于3秒后返回登录',
 				position: 'top-center',
 				style: 'success',
@@ -273,7 +273,7 @@
 			return false;
 		}
 	}
-	
+
 	//重置密码
 	function forget(){
 		var username = $("#forget-username").val(),
@@ -319,7 +319,7 @@
 		}
 		//检查用户名是否存在
 		//调后台方法
-		
+
 		//检查注册码是否正确
 		if(code != '11111111'){
 			$.pt({
@@ -336,7 +336,7 @@
 		if(flag){
 			return false;
 		}else{//重置密码
-			spop({			
+			spop({
 				template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
 				position: 'top-center',
 				style: 'success',
@@ -418,7 +418,7 @@ body{
 					<div class="form-actions">
 						<!--<a tabindex="4" class="btn pull-left btn-link text-muted" onClick="goto_forget()">忘记密码?</a>-->
 						<!--<a tabindex="5" class="btn btn-link text-muted" onClick="goto_register()">注册</a>-->
-						<input class="btn btn-primary" type="button" tabindex="3" onClick="login()" value="登录" 
+						<input class="btn btn-primary" type="button" tabindex="3" onClick="login()" value="登录"
 							style="color:white;"/>
 					</div>
 				</form>
@@ -462,7 +462,7 @@ body{
 					</div>
 					<div class="form-actions">
 						<a class="btn pull-left btn-link text-muted" onClick="goto_login()">返回登录</a>
-						<input class="btn btn-primary" type="button" onClick="forget()" value="重置密码" 
+						<input class="btn btn-primary" type="button" onClick="forget()" value="重置密码"
 							style="color:white;"/>
 					</div>
 				</form>
@@ -482,7 +482,7 @@ body{
 					<div class="pad input-container">
 						<section class="content">
 							<span class="input input--hideo">
-								<input class="input__field input__field--hideo" type="text" id="register-username" 
+								<input class="input__field input__field--hideo" type="text" id="register-username"
 									autocomplete="off" placeholder="请输入用户名" maxlength="15"/>
 								<label class="input__label input__label--hideo" for="register-username">
 									<i class="fa fa-fw fa-user icon icon--hideo"></i>
@@ -514,7 +514,7 @@ body{
 					</div>
 					<div class="form-actions">
 						<a class="btn pull-left btn-link text-muted" onClick="goto_login()">返回登录</a>
-						<input class="btn btn-primary" type="button" onClick="register()" value="注册" 
+						<input class="btn btn-primary" type="button" onClick="register()" value="注册"
 							style="color:white;"/>
 					</div>
 				</form>

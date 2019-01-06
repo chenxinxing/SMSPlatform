@@ -1,0 +1,146 @@
+.lazy{
+	background: url(../img/lazy.png) no-repeat center center;
+	background-size: 2.53rem auto;
+    border: none;
+}
+
+.swiper-pagination{
+	line-height: 0;
+	font-size: 0;
+	bottom: 0.2rem;
+}
+.swiper-pagination-bullet{
+	/* width: 0.14rem;
+	height: 0.14rem; */
+	width: 0.2rem;
+	height: 0.05rem;
+	background: #ECECEC;
+	opacity: 1;
+}
+.swiper-pagination-bullet-active{
+	background: #D8D8D8;
+}
+
+input{
+	font-size: 0.26rem;
+}
+input::-webkit-input-placeholder{
+	color: #C0C0C0;
+}
+table{
+	max-width: 100%;
+}
+
+.portrait{
+	/* border-radius: 100%; */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: url(../img/img1.png);
+}
+
+.header-box{
+	height: .84rem;
+}
+header{
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 0.84rem;
+	background: #FCFCFC;
+	z-index: 20;
+	display: flex;
+	align-items:center;
+}
+header h2{
+	flex:1;
+	font-size: 0.34rem;
+	color: #000000;
+	line-height: 0.48rem;
+	font-weight: normal;
+	text-align: center;
+}
+header .back{
+	position: absolute;
+	left: .34rem;
+	top: 0;
+	width: 0.18rem;
+	height:100%;
+	display: block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-image: url(../img/back1.png);
+}
+header .btn{
+	position: absolute;
+	right: 0.28rem;
+	top: 0;
+	height: 100%;
+	display: flex;
+	align-items:center;
+	font-size: 0.26rem;
+	color: #333333;
+	line-height: 0.36rem;
+}
+
+.no-list{
+	background: #fff;
+	padding: 3.1rem 0 1.9rem;
+	text-align: center;
+	font-size: 0.26rem;
+	color: #B2B2B2;
+	line-height: 0.36rem;
+	background-size: 2.83rem 1.94rem;
+	background-repeat: no-repeat;
+	background-image: url(../img/ico4.png);
+	background-position: center 1.03rem;
+}
+
+.load-more{
+	display: block;
+	margin: 0.42rem auto;
+	border: 1px solid #fb7d39;
+	border-radius: 0.1rem;
+	width: 1.88rem;
+	height: 0.56rem;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	font-size: 0.26rem;
+	color: #fb7d39;
+	line-height: 0.36rem;
+}
+.load-more i{
+	display: block;
+	width: 0.12rem;
+	height: 0.14rem;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-image: url(../img/ico3.png);
+	margin-left: 0.06rem;
+}
+.no-more{
+	height: 0.9rem;
+	margin-bottom: -0.38rem;
+	background: #f7f7f7;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	font-size: 0.26rem;
+	color: #B2B2B2;
+	line-height: 0.36rem;
+}
+.no-more i{
+	display: block;
+	width: 1.64rem;
+	height: 1px;
+	background: #DADADA;
+	margin: 0 0.3rem;
+}
+.drop-loading{
+	position: relative;
+	height: 50px;
+}

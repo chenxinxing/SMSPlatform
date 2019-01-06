@@ -13,11 +13,28 @@
     list_id, user_id, send_to, send_time, send_status, sms_content
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sendlist
     where list_id = #{listId,jdbcType=VARCHAR}
   </select>
+
+    <!--根据用户名查询短信记录-->
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sendlist
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据用户名和手机号查询短信记录-->
+  <select id="selectByUserIdAndPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sendlist
+    where user_id = #{user_id,jdbcType=VARCHAR} and send_to LIKE  #{send_to,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sendlist
     where list_id = #{listId,jdbcType=VARCHAR}

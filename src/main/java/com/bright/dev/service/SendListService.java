@@ -2,6 +2,8 @@ package com.bright.dev.service;
 
 import com.bright.dev.entity.SendList;
 
+import java.util.List;
+
 /**
  * @Author: Bright
  * @Date: 2018/11/30 12:24
@@ -9,16 +11,11 @@ import com.bright.dev.entity.SendList;
 
 public interface SendListService {
 
-    int deleteByPrimaryKey(Integer listId);
-
     int insert(SendList record);
 
-    int insertSelective(SendList record);
+    SendList selectByPrimaryKey(String listId);
 
-    SendList selectByPrimaryKey(Integer listId);
+    List<SendList> selectByUserId(String userId);
 
-    int updateByPrimaryKeySelective(SendList record);
-
-    int updateByPrimaryKey(SendList record);
-
+    List<SendList> getSinglList(String userId,String phone);
 }

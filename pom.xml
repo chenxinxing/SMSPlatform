@@ -72,26 +72,6 @@
 		<!-- 跨域过滤器相关 -->
 		<!-- DICOM Lib -->
 
-		<dependency>
-			<groupId>org.dcm4che</groupId>
-			<artifactId>dcm4che-core</artifactId>
-			<version>${version.dcm4che}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.dcm4che</groupId>
-			<artifactId>dcm4che-imageio</artifactId>
-			<version>${version.dcm4che}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.dcm4che</groupId>
-			<artifactId>dcm4che-net</artifactId>
-			<version>${version.dcm4che}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.dcm4che.tool</groupId>
-			<artifactId>dcm4che-tool-common</artifactId>
-			<version>${version.dcm4che}</version>
-		</dependency>
 		<!-- oss -->
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>

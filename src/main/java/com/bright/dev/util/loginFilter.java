@@ -20,12 +20,12 @@ public class loginFilter implements Filter {
         HttpSession session = request.getSession();
         //String flag = (String) session.getAttribute("loginFlag");
         if (session.getAttribute("loginFlag") == null ) {
-            if (request.getRequestURI().contains("/index.html") || request.getRequestURI().contains("login")) {
+            if (request.getRequestURI().contains("/login.html") || request.getRequestURI().contains("login")) {
                 chain.doFilter(req, resp);
                 return;
             }else{
                 //request.getRequestDispatcher(request.getContextPath()).forward(request, response);
-                response.sendRedirect("/SMSPlatform/index.html");
+                response.sendRedirect("/SMSPlatform/login.html");
                 return;
             }
         } else

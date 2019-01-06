@@ -6,6 +6,8 @@ import com.bright.dev.service.SendListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author: Bright
  * @Date: 2018/12/4 16:43
@@ -16,34 +18,24 @@ public class SendListServiceImpl implements SendListService {
     @Autowired
     private SendListMapper mapper;
 
-
-    @Override
-    public int deleteByPrimaryKey(Integer listId) {
-        return mapper.deleteByPrimaryKey(listId);
-    }
-
     @Override
     public int insert(SendList record) {
         return mapper.insert(record);
     }
 
     @Override
-    public int insertSelective(SendList record) {
-        return mapper.insertSelective(record);
-    }
-
-    @Override
-    public SendList selectByPrimaryKey(Integer listId) {
+    public SendList selectByPrimaryKey(String listId) {
         return mapper.selectByPrimaryKey(listId);
     }
 
     @Override
-    public int updateByPrimaryKeySelective(SendList record) {
-        return mapper.updateByPrimaryKeySelective(record);
+    public List<SendList> selectByUserId(String userId) {
+        return mapper.selectByUserId(userId);
     }
 
     @Override
-    public int updateByPrimaryKey(SendList record) {
-        return mapper.updateByPrimaryKey(record);
+    public List<SendList> getSinglList(String userId, String phone) {
+        return mapper.selectByUserIdAndPhone(userId,phone);
     }
+
 }

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title></title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+</head>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $.ajax
+        ({
+            dataType: 'json', type: 'post',
+            url: "http://101.132.141.83:8088/SMSPlatform/getlist",
+            //url: "http://localhost:8088/SMSPlatform/getlist",
+            success: function (data) {
+                if (data == '') {
+                    $("#mainTable").hide()
+                    alert("未查询到信息记录")
+                } else {
+                    var json = JSON.parse(data);
+                    var trStr = '';//动态拼接table
+
+                    for (var i = 0; i < json.length; i++) {
+                        //console.log(json[i].smsContent);
+                        trStr += '<tr class="example">';//拼接处规范的表格形式
+                        trStr += '<td width="15%" style="display:none" id="user">' + json[i].listId + '</td>';//数据表的主键值
+                        trStr += '<td width="15%">' + json[i].userId + '</td>';//对应数组表的字段值
+                        trStr += '<td width="15%">' + json[i].sendTo + '</td>';
+                        trStr += '<td width="15%">' + json[i].sendTime + '</td>';
+                        trStr += '<td width="15%">' + statues(json[i].sendStatus) + '</td>';
+                        //trStr += '<td width="15%">' + json[i].smsContent + '</td>';
+                        /*经典之处，要将主键对应的值以json的形式进行传递，才能在后台使用*/
+                        trStr += '</tr>';
+                        //console.log(json[i].sendStatus+'.....')
+                    }
+                    $('#tbody').append(trStr);
+
+                }
+            },
+            error: function () {
+                alert("请求失败！");
+            }
+        });
+
+        function statues(status) {
+            var str;
+            if (status == 0) {
+                str = '成功';
+            } else {
+                str = '失败';
+            }
+            /* switch (status){
+                 case 0:str = '成功';
+                     break;
+                 default :
+                     str = '失败';
+             }*/
+            return str;
+        }
+
+        $("button").click(function () {
+            var varue = $("#inp").val()
+            if (varue == '') {
+                alert("请输入手机号")
+            } else {
+                $("#tbody").find($(".example")).remove();
+
+                $.ajax({
+                    dataType: 'json', type: 'post',
+                    url: "http://101.132.141.83:8088/SMSPlatform/getsinglelist",
+                    //url: "http://localhost:8088/SMSPlatform/getsinglelist",
+                    data: {
+                        varue: varue
+                    },
+                    success: function (data) {
+                        if (data == '') {
+                            $("#mainTable").hide()
+                            alert("未查询到信息记录")
+                        } else {
+                            var json = JSON.parse(data);
+                            var trStr = '';//动态拼接table
+                            //var adb=document.getElementById('mainTable');
+                            //var adb=$('#mainTable');
+                            for (var i = 0; i < json.length; i++) {
+                                //console.log(json[i].smsContent);
+                                trStr += '<tr class="example">';//拼接处规范的表格形式
+                                trStr += '<td width="15%" style="display:none" id="user">' + json[i].listId + '</td>';//数据表的主键值
+                                trStr += '<td width="15%">' + json[i].userId + '</td>';//对应数组表的字段值
+                                trStr += '<td width="15%">' + json[i].sendTo + '</td>';
+                                trStr += '<td width="15%">' + json[i].sendTime + '</td>';
+                                trStr += '<td width="15%">' + statues(json[i].sendStatus) + '</td>';
+                                trStr += '<td width="15%">' + json[i].smsContent + '</td>';
+                                /*经典之处，要将主键对应的值以json的形式进行传递，才能在后台使用*/
+                                trStr += '</tr>';
+                                //console.log(json[i].sendStatus+'.....')
+                            }
+                            $('#tbody').append(trStr);
+                        }
+                    },
+                    error: function () {
+                        alert("请求失败！");
+                    }
+                });
+            }
+        });
+
+    })
+</script>
+<body>
+<div id="login"></div>
+<div class="login_bg">
+    <a style="float: right" href="http://101.132.141.83:8088/SMSPlatform/register.html">发送短信</a>
+    <!--<a style="float: right" href="http://localhost:8088/SMSPlatform/register.html">发送短信</a>-->
+    <div id="logo">
+        <div>
+            <h2>短信列表</h2>
+        </div>
+    </div>
+    <input type="text" id="inp" placeholder="手机号">
+    <button @click="btn" id="seach">查询</button>
+
+    <br><br>
+
+    <table id="mainTable" class="display hover" border="1">
+        <thead>
+        <tr>
+            <th>发送人</th>
+            <th>手机号</th>
+            <th>发送时间</th>
+            <th>发送状态</th>
+            <th>发送内容</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+
+</html>
