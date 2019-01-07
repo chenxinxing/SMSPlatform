@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发送短信</title>
+    <link rel="stylesheet" href="css/reg.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reg.css?v=1.10">
+</head>
+<style>
+    .box1 {
+        width: 50%;
+        height: 50%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("button").click(function () {
+            var sendTo = ($("#login-sendTo").val())
+            var courierName = ($("#login-courierName").val())
+            var authCode = ($("#login-authCode").val())
+            // console.log(name)
+            // console.log(pass)
+            if (sendTo == '' || courierName == '' || authCode == '') {
+                alert("请输入手机号、快递名称或取件码！")
+            } else {
+                var obj = {
+                    sendTo: sendTo,
+                    courierName: courierName,
+                    authCode: authCode,
+                }
+                $.ajax({
+                    url: `http://101.132.141.83:8088/SMSPlatform/sendsms`,//?username=${username}&password=${password}`,
+                    //url: `http://localhost:8088/SMSPlatform/sendsms`,//?username=${username}&password=${password}`,
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                    //data: JSON.stringify(obj),
+                    data: obj,
+                    dataType: "text",
+                    success: function (result) {
+                        console.log(result)
+                        if (result == 'success') {
+                            alert('发送成功');
+                            //location.href = "http://101.132.141.83:8088/SMSPlatform/register.html";
+                            location.reload();
+                        } else {
+                            alert('发送失败');
+                            location.reload();
+                        }
+                    },
+                    /*error: function (msg) {
+                    console.log(msg)
+                    // $(".notice").html('Error:'+msg);
+                }*/
+                }).fail()
+            }
+
+        });
+    })
+</script>
+<body>
+<div style="width: 100%;width: 300px;margin: 0 auto;align:center;">
+    <div class="box1">
+        <h2 align="center">发送短信</h2>
+        <div class="box1">
+            手&nbsp;机&nbsp;号：&nbsp;<input id="login-sendTo" type="text" align="center"><br><br>
+            快递名称：<input id="login-courierName" type="text" align="center"><br><br>
+            取&nbsp;件&nbsp;码：&nbsp;<input id="login-authCode" type="text" align="center"><br><br>
+            <button @click="login()">发送</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

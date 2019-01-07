@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title></title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+</head>
+<script src="js/jquery.min.js"></script>
+<style>
+    body,html{
+        margin:0;
+        padding:0;
+    }
+    .main{
+        width:100%;
+    }
+    .main>div{
+        display: inline-block;
+        width: 25vw;
+        height: 25vw;
+        background-color: #F00;
+        border-radius: 20%;
+        line-height: 25vw;
+        vertical-align: middle;
+        text-align: center;
+        /* margin-left: 20px; */
+        opacity: 0.5;
+        color: #000;
+        font-weight: 900;
+    }
+</style>
+<body>
+<div id="login"></div>
+<div class="login_bg">
+    <div id="logo">
+        <div>
+            <h2>Home</h2>
+        </div>
+    </div>
+
+    <div class= "main">
+        <div class="left" onclick="window.open('/SMSPlatform/register.html')" title="发送短信">发送短信</div>
+        <!--<div class="left" onclick="window.open('http://localhost:8088/SMSPlatform/register.html')" title="发送短信">发送短信</div>-->
+        <div style="background: #2ecc54" onclick="window.open('/SMSPlatform/smslist.html')" title="查看列表">查看列表</div>
+       <!--<div style="background: #2ecc54;margin-left: 20px" onclick="window.open('http://localhost:8088/SMSPlatform/smslist.html')" title="查看列表">查看列表</div>-->
+    </div>
+
+</div>
+</body>
+
+</html>

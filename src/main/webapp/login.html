@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title></title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+</head>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function() {
+        $("button").click(function(){
+            var name = ($("#login-username").val())
+            var pass = ($("#login-password").val())
+            /*console.log(name)
+            console.log(pass)*/
+            if(name == '' || pass == ''){
+                alert("请输入用户名或密码")
+            }else {
+                var obj = {
+                    username: name,
+                    password: pass,
+                }
+                $.ajax({
+                    url: `/SMSPlatform/login`,//?username=${username}&password=${password}`,
+                    //url: `http://localhost:8088/SMSPlatform/login`,//?username=${username}&password=${password}`,
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                    data: obj,
+                    dataType: "text",
+                    success: function (result) {
+                        console.log(result)
+                        if (result == 'success') {
+                            alert('登录成功');
+                            //location.href = "http://localhost:8088/SMSPlatform/home.html";
+                            location.href="/SMSPlatform/home.html";
+                            return true;
+                        } else {
+                            alert('登录失败');
+                            location.reload();
+                        }
+                    },
+                    error: function (msg) {
+                        alert('登录失败');
+                        location.reload();
+                }
+                }).fail()
+
+            }
+
+        });
+    })
+</script>
+<body>
+    <div id="login"></div>
+    <div class="login_bg">
+        <div id="logo">
+            <img src="images/logo.png" alt=""/>
+        </div>
+        <form action="">
+            <div class="userName">
+                <lable>用户名：</lable>
+                <input type="text"  id="login-username" name="name" placeholder="请输入用户名" required/>
+            </div>
+            <div class="passWord">
+                <lable>密&nbsp;&nbsp;&nbsp;码：</lable>
+                <input id="login-password" type="password" name="password" placeholder="请输入密码"  required/>
+            </div>
+            <div class="choose_box">
+                <div>
+                    <!-- <input type="checkbox" checked="checked" name="checkbox"/>
+                    <lable>记住密码</lable> -->
+                </div>
+                <!-- <a href="newPassword.html">忘记密码</a> -->
+            </div>
+            <button class="login_btn" @click="login()" type="button">登&nbsp;&nbsp;录</button>
+        </form>
+    </div>
+</body>
+</html>

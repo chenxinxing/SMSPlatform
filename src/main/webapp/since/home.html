@@ -1,0 +1,425 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>发送短信</title>
+	<link href="css/normalize.css" rel="stylesheet">
+	<link href="css/login.css" rel="stylesheet">
+	<link href="css/sign-up-login.css" rel="stylesheet">
+	<link type="text/css" href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/inputEffect.css" rel="stylesheet">
+	<link href="css/tooltips.css" rel="stylesheet">
+	<link href="css/spop.min.css" rel="stylesheet">
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/snow.js"></script>
+	<script src="js/jquery.pure.tooltips.js"></script>
+	<script src="js/spop.min.js"></script>
+	<script>
+        (function () {
+            // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+            if (!String.prototype.trim) {
+                (function () {
+                    // Make sure we trim BOM and NBSP
+                    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+                    String.prototype.trim = function () {
+                        return this.replace(rtrim, '');
+                    };
+                })();
+            }
+
+            [].slice.call(document.querySelectorAll('input.input__field')).forEach(function (inputEl) {
+                // in case the input is already filled..
+                if (inputEl.value.trim() !== '') {
+                    classie.add(inputEl.parentNode, 'input--filled');
+                }
+
+                // events:
+                inputEl.addEventListener('focus', onInputFocus);
+                inputEl.addEventListener('blur', onInputBlur);
+            });
+
+            function onInputFocus(ev) {
+                classie.add(ev.target.parentNode, 'input--filled');
+            }
+
+            function onInputBlur(ev) {
+                if (ev.target.value.trim() === '') {
+                    classie.remove(ev.target.parentNode, 'input--filled');
+                }
+            }
+        })();
+
+        $(function () {
+            $('#login #login-password').focus(function () {
+                $('.login-owl').addClass('password');
+            }).blur(function () {
+                $('.login-owl').removeClass('password');
+            });
+            $('#login #register-password').focus(function () {
+                $('.register-owl').addClass('password');
+            }).blur(function () {
+                $('.register-owl').removeClass('password');
+            });
+            $('#login #register-repassword').focus(function () {
+                $('.register-owl').addClass('password');
+            }).blur(function () {
+                $('.register-owl').removeClass('password');
+            });
+            $('#login #forget-password').focus(function () {
+                $('.forget-owl').addClass('password');
+            }).blur(function () {
+                $('.forget-owl').removeClass('password');
+            });
+        });
+
+        function goto_register() {
+            $("#register-username").val("");
+            $("#register-password").val("");
+            $("#register-repassword").val("");
+            $("#register-code").val("");
+            $("#tab-2").prop("checked", true);
+        }
+
+        function goto_login() {
+            $("#login-username").val("");
+            $("#login-password").val("");
+            $("#tab-1").prop("checked", true);
+        }
+
+        function goto_forget() {
+            $("#forget-username").val("");
+            $("#forget-password").val("");
+            $("#forget-code").val("");
+            $("#tab-3").prop("checked", true);
+        }
+
+        //注册
+        function register() {
+            var username = $("#register-username").val(),
+                password = $("#register-password").val(),
+                repassword = $("#register-repassword").val(),
+                code = $("#register-code").val(),
+                flag = false,
+                validatecode = null;
+            //判断用户名密码是否为空
+            if (username == "") {
+                $.pt({
+                    target: $("#register-username"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "手机号不能为空"
+                });
+                flag = true;
+            }
+            if (password == "") {
+                $.pt({
+                    target: $("#register-password"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "快递名称不能为空"
+                });
+                flag = true;
+            }
+            if (repassword == "") {
+                $.pt({
+                    target: $("#register-repassword"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "地址不能为空"
+                });
+                flag = true;
+            }
+
+            if (!flag) {
+
+                if (code == "") {
+                    $.pt({
+                        target: $("#register-code"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "取件码不能为空"
+                    });
+                    flag = true;
+                }
+                var obj = {
+                    sendTo: username,
+                    courierName: password,
+                    authCode: code
+                }
+                $.ajax({
+                    // url: `http://localhost:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&authCode=${code}`,
+                    url: `http://101.132.141.83:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&address=${repassword}&authCode=${code}`,
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    //data: JSON.stringify(obj),
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if (result == 'success') {
+                            alert('发送成功');
+                            location.reload();
+                        } else {
+                            alert('发送失败');
+                            location.reload();
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg)
+                        // $(".notice").html('Error:'+msg);
+                    }
+                }).fail()
+
+                // // 获取表单的dom元素
+                // var form = document.getElementById('test_form');
+                // // 添加action
+                // form.action = `http://localhost:8088/SMSPlatform/sendsms?sendTo=${username}&courierName=${password}&address=${repassword}&authCode=${code}`
+                // // 提交
+                // form.submit();
+            }
+
+            function login() {//登录
+                var username = $("#login-username").val(),
+                    password = $("#login-password").val(),
+                    validatecode = null,
+                    flag = false;
+                //判断用户名密码是否为空
+                if (username == "") {
+                    $.pt({
+                        target: $("#login-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名不能为空"
+                    });
+                    flag = true;
+                }
+                if (password == "") {
+                    $.pt({
+                        target: $("#login-password"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "密码不能为空"
+                    });
+                    flag = true;
+                }
+                //用户名只能是15位以下的字母或数字
+                var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
+                if (!regExp.test(username)) {
+                    $.pt({
+                        target: $("#login-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名必须为15位以下的字母或数字"
+                    });
+                    flag = true;
+                }
+
+                if (flag) {
+                    return false;
+                } else {//登录
+                    //调用后台登录验证的方法
+                    alert('登录成功');
+                    return false;
+                }
+            }
+
+            //重置密码
+            function forget() {
+                var username = $("#forget-username").val(),
+                    password = $("#forget-password").val(),
+                    code = $("#forget-code").val(),
+                    flag = false,
+                    validatecode = null;
+                //判断用户名密码是否为空
+                if (username == "") {
+                    $.pt({
+                        target: $("#forget-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名不能为空"
+                    });
+                    flag = true;
+                }
+                if (password == "") {
+                    $.pt({
+                        target: $("#forget-password"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "密码不能为空"
+                    });
+                    flag = true;
+                }
+                //用户名只能是15位以下的字母或数字
+                var regExp = new RegExp("^[a-zA-Z0-9_]{1,15}$");
+                if (!regExp.test(username)) {
+                    $.pt({
+                        target: $("#forget-username"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "用户名必须为15位以下的字母或数字"
+                    });
+                    flag = true;
+                }
+                //检查用户名是否存在
+                //调后台方法
+
+                //检查注册码是否正确
+                if (code != '11111111') {
+                    $.pt({
+                        target: $("#forget-code"),
+                        position: 'r',
+                        align: 't',
+                        width: 'auto',
+                        height: 'auto',
+                        content: "注册码不正确"
+                    });
+                    flag = true;
+                }
+
+                if (flag) {
+                    return false;
+                } else {//重置密码
+                    spop({
+                        template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
+                        position: 'top-center',
+                        style: 'success',
+                        autoclose: 3000,
+                        onOpen: function () {
+                            var second = 2;
+                            var showPop = setInterval(function () {
+                                if (second == 0) {
+                                    clearInterval(showPop);
+                                }
+                                $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于' + second + '秒后返回登录');
+                                second--;
+                            }, 1000);
+                        },
+                        onClose: function () {
+                            goto_login();
+                        }
+                    });
+                    return false;
+                }
+            }
+
+            function showerror() {
+                var myerror = sessionStorage.getItem("error");
+                if (myerror === '') {
+                    console.log("123");
+                } else if (myerror == null) {
+                    console.log("456");
+                } else {
+                    alert(myerror);
+                }
+                myerror = null;
+            }
+        }
+
+	</script>
+	<style type="text/css">
+		html {
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			background-repeat: no-repeat;
+			background-position: center center #2D0F0F;
+			background-color: #00BDDC;
+			background-image: url(images/snow.jpg);
+			background-size: 100% 100%;
+		}
+
+		.snow-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 100001;
+		}
+	</style>
+</head>
+<body>
+<!-- 雪花背景 -->
+<div class="snow-container"></div>
+<!-- 登录控件 -->
+<div id="login">
+	<input class="sign-in hidden" id="tab-1" name="tab" type="radio" checked>
+	<input class="sign-up hidden" id="tab-2" name="tab" type="radio" checked>
+	<input class="sign-out hidden" id="tab-3" name="tab" type="radio">
+	<div class="wrapper">
+		<!-- 注册页面 -->
+		<div class="login sign-up-htm">
+			<!-- 两种方式 第一种action里面填写连接， 没有input里面必须有name属性（name属性的值就是参数）。最后点击注册时候，input的type类型要改为submit -->
+			<!-- 第二种actoin里面不写连接， 点击注册时候获取这个form表单的dom元素， 在添加action连接， 最后submit ，这个注册按钮type不用为submit  -->
+			<form class="container offset1 loginform" id="test_form" action method="post" onsubmit="return showerror()">
+				<!-- 猫头鹰控件 -->
+				<div class="register-owl" id="owl-login">
+					<div class="hand"></div>
+					<div class="hand hand-r"></div>
+					<div class="arms">
+						<div class="arm"></div>
+						<div class="arm arm-r"></div>
+					</div>
+				</div>
+				<div class="pad input-container">
+					<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" id="register-username" type="text"
+									   autocomplete="off" placeholder="手机号" maxlength="15">
+								<label class="input__label input__label--hideo" for="register-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+
+					</section>
+				</div>
+
+				<div class="pad input-container">
+					<section class="content">
+							<span class="input input--hideo">
+								<input class="input__field input__field--hideo" id="register-username" type="text"
+									   autocomplete="off" placeholder="手机号" maxlength="15">
+								<label class="input__label input__label--hideo" for="register-username">
+									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+
+					</section>
+				</div>
+				<div class="form-actions">
+					<!--<a class="btn pull-left btn-link text-muted" onClick="goto_login()">返回登录</a>-->
+					<input class="btn btn-primary" type="button" onClick="register()" value="发送" style="color:white;">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

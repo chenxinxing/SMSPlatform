@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dev.dao.SendListMapper">
+  <resultMap id="BaseResultMap" type="com.bright.dev.entity.SendList">
+    <id column="list_id" jdbcType="VARCHAR" property="listId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="send_to" jdbcType="VARCHAR" property="sendTo" />
+    <result column="send_time" jdbcType="VARCHAR" property="sendTime" />
+    <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
+    <result column="sms_content" jdbcType="VARCHAR" property="smsContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    list_id, user_id, send_to, send_time, send_status, sms_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sendlist
+    where list_id = #{listId,jdbcType=VARCHAR}
+  </select>
+
+    <!--根据用户名查询短信记录-->
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sendlist
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据用户名和手机号查询短信记录-->
+  <select id="selectByUserIdAndPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sendlist
+    where user_id = #{user_id,jdbcType=VARCHAR} and send_to LIKE  #{send_to,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sendlist
+    where list_id = #{listId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bright.dev.entity.SendList">
+    insert into sendlist (list_id, user_id, send_to, 
+      send_time, send_status, sms_content
+      )
+    values (#{listId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{sendTo,jdbcType=VARCHAR},
+      #{sendTime,jdbcType=VARCHAR}, #{sendStatus,jdbcType=VARCHAR}, #{smsContent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bright.dev.entity.SendList">
+    insert into sendlist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="listId != null">
+        list_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sendTo != null">
+        send_to,
+      </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+      <if test="smsContent != null">
+        sms_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="listId != null">
+        #{listId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTo != null">
+        #{sendTo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        #{smsContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bright.dev.entity.SendList">
+    update sendlist
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTo != null">
+        send_to = #{sendTo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        send_status = #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        sms_content = #{smsContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where list_id = #{listId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bright.dev.entity.SendList">
+    update sendlist
+    set user_id = #{userId,jdbcType=VARCHAR},
+      send_to = #{sendTo,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=VARCHAR},
+      sms_content = #{smsContent,jdbcType=VARCHAR}
+    where list_id = #{listId,jdbcType=VARCHAR}
+  </update>
+</mapper>

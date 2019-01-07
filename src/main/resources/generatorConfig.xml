@@ -18,8 +18,8 @@
 		</commentGenerator>
 		<!--数据库链接URL，用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/pacsds?characterEncoding=UTF8"
-			userId="root" password="123456">
+			connectionURL="jdbc:mysql://101.132.141.83:3306/SMSPlatform?characterEncoding=UTF8"
+			userId="root" password="root">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<!-- This property is used to specify whether MyBatis Generator should 
@@ -27,7 +27,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="com.dcm.entity"
+		<javaModelGenerator targetPackage="com.bright.dev.entity"
 			targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
@@ -38,7 +38,7 @@
 		</sqlMapGenerator>
 		<!-- 生成DAO的包名和位置 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.dcm.dao" implementationPackage="com.dcm.dao.impl"
+			targetPackage="com.bright.dev.dao" implementationPackage="com.bright.dev.dao.impl"
 			targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
@@ -46,15 +46,15 @@
 		<!-- 要生成哪些表 -->
 
 	
-		<table tableName="sign" domainObjectName="Sign"
+		<table tableName="consumer" domainObjectName="Consumer"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		<!-- <table tableName="instance" domainObjectName="Instance"
+		<table tableName="sendlist" domainObjectName="SendList"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		<table tableName="series" domainObjectName="Series"
+		<!-- <table tableName="series" domainObjectName="Series"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
