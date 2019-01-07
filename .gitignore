@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .settings
 .idea
 .classpath
@@ -10,4 +11,18 @@ target
 **/resources/oxygen-admin
 .DS_Store
 *.cache
+=======
+.settings
+.idea
+.classpath
+.project
+*.iml
+*.eml
+target
+*.log
+*.log.*
+**/resources/oxygen-admin
+.DS_Store
+*.cache
+>>>>>>> e156ea48fbab658610a497ac7b00610e51286d4a
 *.lock
